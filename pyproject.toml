@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=77.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentscope-channel-octo"
+dynamic = ["version"]
+description = "Octo IM (WuKongIM-based corporate IM) channel adapter for AgentScope 2.0"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [{ name = "Mininglamp-OSS" }]
+keywords = ["agentscope", "octo", "wukongim", "im", "chatbot", "channel"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Communications :: Chat",
+]
+dependencies = [
+  # Channel runtime contract (ChannelClients / run_channel_worker) landed in 2.0.7.
+  "agentscope>=2.0.7",
+  # WuKongIM long connection + X25519/AES-CBC session keys.
+  "websockets>=13",
+  "cryptography>=42",
+  "httpx>=0.27",
+  "pydantic>=2",
+]
+
+[project.optional-dependencies]
+# Needed only when ``ws_proxy`` points at a SOCKS proxy.
+socks = ["python-socks>=2.8"]
+dev = ["pytest>=8", "black==23.3.0", "flake8>=6"]
+
+[project.urls]
+Homepage = "https://github.com/Mininglamp-OSS/agentscope-channel-octo"
+Repository = "https://github.com/Mininglamp-OSS/agentscope-channel-octo"
+Issues = "https://github.com/Mininglamp-OSS/agentscope-channel-octo/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "agentscope_channel_octo._version.__version__" }
+
+[tool.black]
+line-length = 79
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
