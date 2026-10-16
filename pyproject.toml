@@ -19,8 +19,9 @@ classifiers = [
   "Topic :: Communications :: Chat",
 ]
 dependencies = [
-  # Channel runtime contract (ChannelClients / run_channel_worker) landed in 2.0.7.
-  "agentscope>=2.0.7",
+  # Channel runtime contract (ChannelClients / run_channel_worker) landed in
+  # 2.0.7; the ``service`` extra brings the app server agentscope.app needs.
+  "agentscope[service]>=2.0.7",
   # WuKongIM long connection + X25519/AES-CBC session keys.
   "websockets>=13",
   "cryptography>=42",
