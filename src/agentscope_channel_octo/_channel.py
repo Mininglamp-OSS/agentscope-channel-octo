@@ -1010,9 +1010,11 @@ class OctoChannel(ChannelBase):
         if cached is not None and now - cached[1] < _NAME_CACHE_TTL_SECS:
             return cached[0]
         api = self._client()
+        # ``None`` means never refreshed: ``time.monotonic()`` can be small
+        # on a freshly booted host, so 0.0 would read as "just refreshed".
+        last_refresh = self._members_refreshed.get(group_no)
         if group_no and (
-            now - self._members_refreshed.get(group_no, 0.0)
-            >= _NAME_CACHE_TTL_SECS
+            last_refresh is None or now - last_refresh >= _NAME_CACHE_TTL_SECS
         ):
             self._members_refreshed[group_no] = now
             try:
